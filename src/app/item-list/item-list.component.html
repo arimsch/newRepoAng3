@@ -1,0 +1,16 @@
+<section class="item-list">
+  <app-item-card
+    *ngFor="let i of items"
+    [item]="i"
+    [elUpdate]="false"
+    (add)="addItem($event)"></app-item-card>
+</section>
+<button
+  tuiButton
+  type="button"
+  appearance="primary"
+  size="m"
+  class="button-page"
+  (click)="togglePage()">
+  в корзину
+</button>

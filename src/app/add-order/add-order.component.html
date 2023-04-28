@@ -1,0 +1,35 @@
+<form class="form order" [formGroup]="formOrder" (submit)="submit()">
+  <div class="tui-form__row">
+    <tui-input tuiTextfieldSize="s" formControlName="name"> Имя </tui-input>
+  </div>
+
+  <div class="tui-form__row">
+    <tui-input tuiTextfieldSize="s" formControlName="mail"> Email </tui-input>
+    <tui-error [error]="computedErrorMailInput"></tui-error>
+  </div>
+
+  <div class="tui-form__row">
+    <tui-input formControlName="adress">Адрес доставки</tui-input>
+  </div>
+  <tui-combo-box
+    class="b-form"
+    formControlName="country"
+    (ngModelChange)="countryChange($event)">
+    Страна доставки
+    <input tuiTextfield placeholder="Название" />
+    <tui-data-list-wrapper
+      *tuiDataList
+      [items]="countries"></tui-data-list-wrapper>
+  </tui-combo-box>
+
+  <div class="tui-form__row buttons">
+    <button
+      tuiButton
+      class="tui-form__button"
+      size="s"
+      type="submit"
+      [disabled]="formOrder.invalid">
+      Добавить
+    </button>
+  </div>
+</form>
