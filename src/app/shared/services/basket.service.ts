@@ -29,11 +29,7 @@ export class BasketService {
   public addSelectedItem(item: Item): void {
     const itemInd = this.getIndex(item);
     if (itemInd >= 0) {
-      if (this._selectedItems[itemInd].count) {
-        this._selectedItems[itemInd].count! += item.count!;
-      } else {
-        this._selectedItems[itemInd].count = item.count;
-      }
+      this._selectedItems[itemInd].count = item.count;
     } else {
       this._selectedItems.push(item);
     }
@@ -60,6 +56,7 @@ export class BasketService {
       });
     }
   }
+  
   private getIndex(item: Item): number {
     return this._selectedItems.findIndex(el => el.id === item.id);
   }
