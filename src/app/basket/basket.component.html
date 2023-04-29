@@ -1,6 +1,6 @@
 <section class="item-list">
   <app-item-basket
-    *ngFor="let i of items"
+    *ngFor="let i of items$ | async"
     [item]="i"
     (update)="updateItem($event)"
     (delete)="deleteItem($event)"></app-item-basket>

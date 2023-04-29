@@ -56,7 +56,7 @@ export class BasketService {
       });
     }
   }
-  
+
   private getIndex(item: Item): number {
     return this._selectedItems.findIndex(el => el.id === item.id);
   }

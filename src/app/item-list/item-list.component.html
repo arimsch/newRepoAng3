@@ -1,6 +1,6 @@
 <section class="item-list">
   <app-item-card
-    *ngFor="let i of items"
+    *ngFor="let i of itemsDB$ | async"
     [item]="i"
     [elUpdate]="false"
     (add)="addItem($event)"></app-item-card>

@@ -24,9 +24,6 @@ export class BasketComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.basketService.initialize();
-    this.basketService.items$.subscribe(() => {
-      this.items;
-    });
   }
 
   ngOnDestroy(): void {
@@ -37,8 +34,8 @@ export class BasketComponent implements OnInit, OnDestroy {
     return this.basketService.sum$;
   }
 
-  public get items(): Item[] {
-    return this.basketService.selectedItems;
+  public get items$(): Observable<Item[]> {
+    return this.basketService.items$;
   }
 
   public get currencySymbol$(): Observable<string> {
