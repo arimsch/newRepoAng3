@@ -12,6 +12,7 @@ import { TYPE_MAIL, ValidatorsLength } from './validators-params';
 import { TuiValidationError } from '@taiga-ui/cdk';
 import { TextErrors } from './error-messages-text';
 import { BasketService } from '../shared/services/basket.service';
+import { catchError, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-add-order',
@@ -33,17 +34,24 @@ export class AddOrderComponent implements OnInit {
     this.buildWalletForm();
     this.countriesService
       .fetchCountries()
-      .subscribe(data =>
-        data.forEach(el =>
-          this.countries.push(
-            new Country(
-              el.name.common,
-              Object.keys(el.currencies)[0],
-              Object.values(el.currencies)[0]?.symbol
+      .pipe(
+        map(data => {
+          data.forEach(el =>
+            this.countries.push(
+              new Country(
+                el.name.common,
+                Object.keys(el.currencies)[0],
+                Object.values(el.currencies)[0]?.symbol
+              )
             )
-          )
-        )
-      );
+          );
+        }),
+        catchError(err => {
+          console.log(err);
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   public get _mail(): AbstractControl | null {

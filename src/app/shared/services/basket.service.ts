@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Item } from '../models/item';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, of } from 'rxjs';
 import { Country } from '../classes/country';
 import { CourseService } from './course.service';
 
@@ -49,11 +49,22 @@ export class BasketService {
     const { courseSymbol, courseName } = country;
     if (this.currency$.getValue() !== courseSymbol) {
       this.currency$.next(courseSymbol);
-      this.courseService.fetchCourse(courseName).subscribe(data => {
-        this.sum$.next(
-          Math.round((this._summary / Object.values(data.rates)[0]) * 100) / 100
-        );
-      });
+      this.courseService
+        .fetchCourse(courseName)
+        .pipe(
+          catchError(err => {
+            console.error(err);
+            return of(null);
+          })
+        )
+        .subscribe(data => {
+          if (data) {
+            this.sum$.next(
+              Math.round((this._summary / Object.values(data.rates)[0]) * 100) /
+                100
+            );
+          }
+        });
     }
   }
 

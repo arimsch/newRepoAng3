@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -16,7 +15,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./basket.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BasketComponent implements OnInit, OnDestroy {
+export class BasketComponent implements OnInit {
   @Output()
   public changePage = new EventEmitter<null>();
 
@@ -24,10 +23,6 @@ export class BasketComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.basketService.initialize();
-  }
-
-  ngOnDestroy(): void {
-    this.basketService.items$.unsubscribe();
   }
 
   public get summary$(): Observable<number> {
