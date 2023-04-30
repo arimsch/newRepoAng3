@@ -1,4 +1,4 @@
-export interface CourseApi {
+export interface Course {
   base: string;
   date: string;
   rates: object;

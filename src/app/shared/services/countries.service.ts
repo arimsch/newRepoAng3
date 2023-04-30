@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CountryApi } from '../models/countries-api-response';
+import { CountryInfo } from '../models/country-info';
+import { URL_COUNTRY } from '../url-names';
 
 @Injectable()
 export class CountriesService {
   constructor(private readonly _http: HttpClient) {}
 
-  public fetchCountries(): Observable<CountryApi[]> {
-    return this._http.get<CountryApi[]>(
-      'https://restcountries.com/v3.1/all?fields=name,currencies'
+  public fetchNameCurrencies(): Observable<CountryInfo[]> {
+    return this._http.get<CountryInfo[]>(
+      `${URL_COUNTRY}/all?fields=name,currencies`
     );
   }
 }

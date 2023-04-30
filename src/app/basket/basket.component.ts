@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-basket',
   templateUrl: './basket.component.html',
-  styleUrls: ['./basket.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasketComponent implements OnInit {
@@ -22,7 +21,7 @@ export class BasketComponent implements OnInit {
   constructor(private readonly basketService: BasketService) {}
 
   ngOnInit(): void {
-    this.basketService.initialize();
+    this.initializeService();
   }
 
   public get summary$(): Observable<number> {
@@ -47,5 +46,9 @@ export class BasketComponent implements OnInit {
 
   public updateItem(item: Item): void {
     this.basketService.updateItem(item);
+  }
+
+  private initializeService(): void {
+    this.basketService.initialize();
   }
 }

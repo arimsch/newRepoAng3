@@ -7,12 +7,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { CountriesService } from '../shared/services/countries.service';
-import { Country } from '../shared/classes/country';
+import { Country } from '../shared/interfaces/country';
 import { TYPE_MAIL, ValidatorsLength } from './validators-params';
 import { TuiValidationError } from '@taiga-ui/cdk';
 import { TextErrors } from './error-messages-text';
 import { BasketService } from '../shared/services/basket.service';
-import { catchError, map, of } from 'rxjs';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-add-order',
@@ -32,26 +32,7 @@ export class AddOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildWalletForm();
-    this.countriesService
-      .fetchCountries()
-      .pipe(
-        map(data => {
-          data.forEach(el =>
-            this.countries.push(
-              new Country(
-                el.name.common,
-                Object.keys(el.currencies)[0],
-                Object.values(el.currencies)[0]?.symbol
-              )
-            )
-          );
-        }),
-        catchError(err => {
-          console.log(err);
-          return of([]);
-        })
-      )
-      .subscribe();
+    this.makeCountriesList();
   }
 
   public get _mail(): AbstractControl | null {
@@ -112,5 +93,28 @@ export class AddOrderComponent implements OnInit {
       adress: [null, [Validators.required]],
       country: [''],
     });
+  }
+
+  private makeCountriesList(): void {
+    this.countriesService
+      .fetchNameCurrencies()
+      .pipe(
+        catchError(err => {
+          console.error(err);
+          return of([]);
+        })
+      )
+      .subscribe(data => {
+        data.forEach(el =>
+          this.countries.push({
+            name: el.name.common,
+            courseName: Object.keys(el.currencies)[0],
+            courseSymbol: Object.values(el.currencies)[0]?.symbol,
+            toString: function (): string {
+              return this.name;
+            },
+          } as Country)
+        );
+      });
   }
 }

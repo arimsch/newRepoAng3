@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Item } from '../models/item';
 import { BehaviorSubject, catchError, of } from 'rxjs';
-import { Country } from '../classes/country';
+import { Country } from '../interfaces/country';
 import { CourseService } from './course.service';
 
 @Injectable()
@@ -20,7 +20,6 @@ export class BasketService {
   }
 
   public initialize(): void {
-    this.updateSummary();
     this.items$.subscribe(() => {
       this.updateSummary();
     });
@@ -28,10 +27,10 @@ export class BasketService {
 
   public addSelectedItem(item: Item): void {
     const itemInd = this.getIndex(item);
-    if (itemInd >= 0) {
-      this._selectedItems[itemInd].count = item.count;
-    } else {
+    if (itemInd === -1) {
       this._selectedItems.push(item);
+    } else {
+      this._selectedItems[itemInd].count = item.count;
     }
   }
 

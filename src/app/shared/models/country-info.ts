@@ -1,4 +1,4 @@
-export interface CountryApi {
+export interface CountryInfo {
   name: {
     common: string;
     nativeName: object;
