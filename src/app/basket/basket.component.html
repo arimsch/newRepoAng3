@@ -1,0 +1,18 @@
+<section class="item-list">
+  <app-item-basket
+    *ngFor="let i of items$ | async"
+    [item]="i"
+    (update)="updateItem($event)"
+    (delete)="deleteItem($event)"></app-item-basket>
+  <div>Итого: {{ summary$ | async }}{{ currencySymbol$ | async }}</div>
+</section>
+<app-add-order></app-add-order>
+<button
+  tuiButton
+  type="button"
+  appearance="primary"
+  size="m"
+  class="button-page"
+  (click)="togglePage()">
+  к списку товаров
+</button>

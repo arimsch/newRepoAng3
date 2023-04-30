@@ -1,0 +1,27 @@
+<article class="item">
+  <div>{{ item.title }}</div>
+  <div>
+    <tui-badge
+      class="support-1"
+      status="success"
+      [value]="item.price | formatPrice"
+      [hoverable]="false"></tui-badge>
+  </div>
+  <form [formGroup]="countForm" class="b-form">
+    <tui-input-count formControlName="count" tuiTextfieldSize="xs">
+      Количество
+      <input tuiTextfield placeholder="1.. 2.. 3.."
+    /></tui-input-count>
+  </form>
+  <div>
+    <button
+      tuiButton
+      type="button"
+      appearance="primary"
+      size="s"
+      [disabled]="countForm.invalid"
+      (click)="addItem()">
+      добавить в корзину
+    </button>
+  </div>
+</article>
