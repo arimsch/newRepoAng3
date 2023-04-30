@@ -4,7 +4,7 @@ import { BasketComponent } from './basket.component';
 import { TuiButtonModule } from '@taiga-ui/core';
 import { ItemModule } from '../item-card/item.module';
 import { AddOrderModule } from '../add-order/add-order.module';
-import { ConvertCasePipeModule } from '../format-price.pipe.ts/format-price-pipe.module';
+import { ConvertCasePipeModule } from '../format-price/format-price-pipe.module';
 
 @NgModule({
   declarations: [BasketComponent],
